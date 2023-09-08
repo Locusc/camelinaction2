@@ -54,6 +54,7 @@ public class OrderRouterWithParallelMulticastTest extends CamelTestSupport {
                             .to("jms:badOrders");        
                 
                 from("jms:xmlOrders")
+                        // 组播模式默认按顺序发送消息副本 使用parallelProcessing可以并行发送
                     .multicast().parallelProcessing()
                     .to("jms:accounting", "jms:production");
                

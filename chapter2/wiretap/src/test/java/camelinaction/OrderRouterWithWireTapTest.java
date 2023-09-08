@@ -32,7 +32,10 @@ public class OrderRouterWithWireTapTest extends CamelTestSupport {
         getMockEndpoint("mock:csv").expectedMessageCount(0);
         assertMockEndpointsSatisfied();
     }
-    
+
+    /**
+     * 窃听器可以在不阻止流程运行的方式增加审计和调试的功能
+     */
     @Override
     protected RouteBuilder createRouteBuilder() throws Exception {
         return new RouteBuilder() {

@@ -32,7 +32,16 @@ public class OrderRouterWithMulticastSOETest extends CamelTestSupport {
         getMockEndpoint("mock:production").expectedMessageCount(0);
         assertMockEndpointsSatisfied();
     }
-    
+
+    /**
+     * Take care when using stopOnException with asynchronous messaging.
+     * In our example, the exception could have happened after the message had been
+     * consumed by both the accounting and production queues, nullifying the
+     * stopOnException effect. In our test case, we decided to use synchronous direct
+     * endpoints, which would allow us to test this feature of the multicast
+     *
+     * 在异步消息传递中, 如果错误发生在队列处理之后, stopOnException将无效, 这里使用的是同步端点方式
+     */
     @Override
     protected RouteBuilder createRouteBuilder() throws Exception {
         return new RouteBuilder() {
@@ -53,7 +62,7 @@ public class OrderRouterWithMulticastSOETest extends CamelTestSupport {
                 
                 from("jms:xmlOrders")
                     .multicast()
-                    .stopOnException()
+                    .stopOnException() // 此功能将在捕获到的第⼀个异常时停⽌多播
                     .to("jms:accounting", "jms:production");
                
                 from("jms:accounting")      

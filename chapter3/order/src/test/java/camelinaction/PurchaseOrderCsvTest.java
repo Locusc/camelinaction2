@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.mock.MockEndpoint;
+import org.apache.camel.dataformat.csv.CsvDataFormat;
 import org.apache.camel.test.junit4.CamelTestSupport;
 import org.junit.Test;
 
@@ -28,11 +29,18 @@ public class PurchaseOrderCsvTest extends CamelTestSupport {
         assertEquals("2", line2.get(2));
     }
 
+    /**
+     * split是一个simple实现的函数, 默认以(,)进行分割
+     */
     @Override
     protected RouteBuilder createRouteBuilder() throws Exception {
         return new RouteBuilder() {
             @Override
             public void configure() throws Exception {
+                CsvDataFormat csvDataFormat = new CsvDataFormat()
+                        .setDelimiter(';')
+                        .setHeader(new String[]{"id", "customerId", "date", "item", "amount", "description"});
+
                 context.setTracing(true);
 
                 from("file://src/test/resources?noop=true&fileName=order.csv")

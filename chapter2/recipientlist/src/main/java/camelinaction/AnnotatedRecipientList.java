@@ -12,6 +12,9 @@ import org.apache.camel.language.xpath.XPath;
  */
 public class AnnotatedRecipientList {
 
+    /**
+     * 注解方式可以简化dsl-收件人列表的实现
+     */
     @RecipientList
     public String[] route(@XPath("/order/@customer") String customer) {
         if (isGoldCustomer(customer)) {

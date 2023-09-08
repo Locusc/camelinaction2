@@ -10,6 +10,7 @@ import org.apache.camel.TypeConverter;
 public final class PurchaseOrderConverter {
 
     @Converter
+    // @Converter(allowNull = true)
     public static PurchaseOrder toPurchaseOrder(byte[] data, Exchange exchange) {
         TypeConverter converter = exchange.getContext().getTypeConverter();
 

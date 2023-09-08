@@ -13,6 +13,9 @@ import org.w3c.dom.Node;
  */
 public class XmlOrderNamespaceService {
 
+    /**
+     * 使用命名空间时, bean参数绑定必须在方法签名中包含命名空间
+     */
     public Document handleIncomingOrder(@Body Document xml,
                                         @XPath(value = "/c:order/@customerId", 
                                                namespaces = @NamespacePrefix(

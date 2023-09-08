@@ -31,7 +31,11 @@ public class OrderRouterWithRecipientListTest extends CamelTestSupport {
         getMockEndpoint("mock:production").expectedMessageCount(1);
         assertMockEndpointsSatisfied();
     }
-    
+
+    /**
+     * recipientList 收件人可以达到动态目的地的效果, 通过条件判断到达多个不同的目的地
+     * 多个目的地是否为并行方式?
+     */
     @Override
     protected RouteBuilder createRouteBuilder() throws Exception {
         return new RouteBuilder() {
